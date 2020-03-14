@@ -1,0 +1,75 @@
+<mat-sidenav-container class="example-container">
+
+  <mat-sidenav mode="over" class="side-nav" [(opened)]="opened" *ngIf="isLoggedIn">
+    <mat-toolbar color="primary"><span>Müvekkil Takip</span></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item *appIsAdmin [routerLink]="['/muvekkiller']">Müvekkiller</a>
+      <a mat-list-item *appIsAdmin [routerLink]="['/avukatlar']">Avukatlar</a>
+      <a mat-list-item [routerLink]="['/davalar']">Davalar</a>
+      <a mat-list-item [routerLink]="['/mesajlar']">Mesajlar</a>
+      <a mat-list-item [routerLink]="['/dokumanlar']">Dökümanlar</a>
+      <a mat-list-item *appIsAdmin [routerLink]="['/sirketler']">Şirketler</a>
+      <a mat-list-item [routerLink]="['/takvim']">Takvim</a>
+      <a mat-list-item [routerLink]="['/rapor']">Rapor</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+
+      <button mat-button (click)="sidenav.toggle()" *ngIf="isLoggedIn">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="app-title">Müvekkil Takip</span>
+      <span class="spacer"></span>
+
+      <div class="toolbar-actions">
+        <span class="username" *ngIf="isLoggedIn">{{userInfo?.email}}</span>
+        <button mat-icon-button *ngIf="isLoggedIn" (click)="logout()">
+          <mat-icon>exit_to_app
+          </mat-icon>
+        </button>
+
+        <a [routerLink]="['/login']" *ngIf="!isLoggedIn">
+          <mat-icon>person
+          </mat-icon>
+        </a>
+
+        <a [routerLink]="['/takvim']" *ngIf="isLoggedIn">
+          <mat-icon>calendar_today</mat-icon>
+        </a>
+        <a [routerLink]="['/settings']" *ngIf="isLoggedIn">
+          <mat-icon>settings</mat-icon>
+        </a>
+
+        <button mat-icon-button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu">
+
+          <mat-icon aria-label="Example icon-button with a heart icon" [matBadge]="unReadCount" matBadgeColor="warn">
+            notifications
+          </mat-icon>
+        </button>
+        <!--Notification list start-->
+        <mat-menu #menu="matMenu" class="notification-menu">
+
+          <button mat-menu-item *ngFor="let item of notifications" (click)="show(item)">
+            <mat-icon *ngIf="!item.isRead;else readed">markunread</mat-icon>
+            <ng-template #readed>
+              <mat-icon>check_circle</mat-icon>
+            </ng-template>
+            <span class="notification-message">{{item.message}} </span>
+          </button>
+
+
+        </mat-menu>
+        <!--Notification list end-->
+        <span *ngIf="isLoggedIn">
+          <img src="/images/bursa-barosu-logosu.png" alt="Bursa Barosu" class="toolbar-icon">
+        </span>
+
+      </div>
+    </mat-toolbar>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

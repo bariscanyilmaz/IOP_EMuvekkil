@@ -1,0 +1,19 @@
+.actions{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.event-table{
+    width: 100%;
+    margin: 40px 0;
+}
+
+mat-divider{
+    margin: 20px 0;
+}
+
+.events-actions{
+    display: flex;
+    flex-direction: row-reverse;
+}

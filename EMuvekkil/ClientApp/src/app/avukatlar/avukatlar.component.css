@@ -1,0 +1,16 @@
+/* Structure */
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  .actions{
+    margin:10px 0;
+  }
+  
+  .avukat-table-title{
+    color: #3f51b5;
+  }

@@ -1,0 +1,44 @@
+<h2 class="mesaj-table-title">Mesajlar</h2>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Tarih </th>
+        <td mat-cell *matCellDef="let element"> {{element.date | date:'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef> Kullanıcı </th>
+        <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef> Mesaj </th>
+        <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dava">
+        <th mat-header-cell *matHeaderCellDef> Dava </th>
+        <td mat-cell *matCellDef="let element"> {{element.davaName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef> Durum </th>
+        <td mat-cell *matCellDef="let element"> {{getStatus(element.isActive)}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="changeStatus(element)" matTooltip="Durumu değiştirmek için tıklayınız">
+                <mat-icon color="warn">swap_horiz</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

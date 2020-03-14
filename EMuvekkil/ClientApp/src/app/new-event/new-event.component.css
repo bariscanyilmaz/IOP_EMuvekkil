@@ -1,0 +1,21 @@
+.example-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.action.add-all {
+  margin: 10px 0;
+}
+.actions {
+  margin: 10px 0;
+}
+
+.actions button:last-child {
+  margin-left: 10px;
+}
+
+.example-chip-list {
+  margin: 10px 0;
+}

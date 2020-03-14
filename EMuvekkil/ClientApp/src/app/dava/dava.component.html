@@ -1,0 +1,254 @@
+<div class="example-container">
+
+  <mat-horizontal-stepper linear="false" #stepper *ngIf="isNewRecord;else existedDava">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Dava adını yazınız</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Dava " formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>İleri</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Müvekkil Seçiniz</ng-template>
+        <mat-form-field>
+          <mat-select formControlName="secondCtrl" required>
+            <mat-option *ngFor="let muv of muvekkils" [value]="muv.id">
+              {{muv.nameSurname}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Geri</button>
+          <button mat-button matStepperNext>İleri</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Avukat Seçiniz</ng-template>
+        <mat-form-field>
+          <mat-select formControlName="thirdCtrl" required>
+            <mat-option *ngFor="let av of lawyers" [value]="av.id">
+              {{av.nameSurname}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Geri</button>
+          <button mat-button
+            [disabled]="!thirdFormGroup.valid || !secondFormGroup.valid ||!firstFormGroup.valid "
+            (click)="saveNew()">Kaydet</button>
+        </div>
+      </form>
+
+    </mat-step>
+  </mat-horizontal-stepper>
+  <ng-template #existedDava>
+    <div class="dava-container">
+
+      <form class="dava" #davaForm="ngForm">
+        <mat-form-field>
+          <input matInput [disabled]="!isAdmin" value="Dava Adı!" placeholder="Dava Adı" [(ngModel)]="davaModel.name"
+            name="davaname" #dava required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Müvekkil</mat-label>
+          <mat-select [disabled]="!isAdmin" name="muvekkilId" [(ngModel)]="davaModel.muvekkilId" #muvekkil required>
+            <mat-option *ngFor="let m of muvekkils" [value]="m.id">
+              {{m.nameSurname}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Durum</mat-label>
+          <mat-select [disabled]="!isAdmin" name="davaStateId" [(ngModel)]="davaModel.davaStateId" #davaState required>
+            <mat-option *ngFor="let c of davaStates" [value]="c.id">
+              {{c.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Avukat</mat-label>
+          <mat-select [disabled]="!isAdmin" name="avukatId" [(ngModel)]="davaModel.avukatId" #avukat required>
+            <mat-option *ngFor="let av of lawyers" [value]="av.id">
+              {{av.nameSurname}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <div *appIsAdmin class="dava-actions">
+        <button mat-raised-button color="warn" (click)="deleteDava()">Sil</button>
+        <button mat-raised-button color="primary" (click)="updateDava()">Güncelle</button>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="dava-masraf">
+        <h3 class="title">Masraflar</h3>
+        <table mat-table [dataSource]="masrafSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="date">
+            
+            <th mat-header-cell *matHeaderCellDef> Tarih </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef> Toplam </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef> Kullanıcı </th>
+            <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Ücret </th>
+            <td mat-cell *matCellDef="let element"> {{element.amount}}₺ </td>
+            <td mat-footer-cell *matFooterCellDef> {{getTotalCost() }}₺ </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Açıklama </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button *appOwner="element.ownerUserName" mat-button (click)="deleteMasraf(element)"
+                matTooltip="Silmek için Tıklayınız">
+                <mat-icon color="warn">delete</mat-icon>
+              </button> </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="masrafColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: masrafColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="masrafColumns"></tr>
+        </table>
+        <div class="actions">
+          <button mat-raised-button color="primary" (click)="addNewMasraf()">Yeni Ekle</button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="dava-document">
+        <h3 class="title">Dökümanlar</h3>
+        <table mat-table [dataSource]="documentSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Tarih </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef> Kullanıcı </th>
+            <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Dosya adı </th>
+            <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Açıklama </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef> Durum </th>
+            <td mat-cell *matCellDef="let element"> {{getStatus(element.isActive)}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button matTooltip="İndirmek için Tıklayınız" (click)="download(element)">
+                <mat-icon color="warn">cloud_download</mat-icon>
+              </button>
+              <button mat-button *appOwner="element.ownerUserName" matTooltip="Durumu değiştirmek için tıklayınız"
+                (click)="changeDocumentStatus(element)">
+                <mat-icon color="warn">swap_horiz</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="documentColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: documentColumns;"></tr>
+        </table>
+        <div class="actions">
+          <button mat-raised-button color="primary" (click)="addNewDocument()">Yeni Ekle</button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="dava-message">
+        <h3 class="title">Mesajlar</h3>
+        <table mat-table [dataSource]="messageSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Tarih </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef> Kullanıcı </th>
+            <td mat-cell *matCellDef="let element"> {{element.ownerName}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef> Mesaj </th>
+            <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef> Durum </th>
+            <td mat-cell *matCellDef="let element"> {{getStatus(element.isActive)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button *appOwner="element.ownerUserName" matTooltip="Durumu değiştirmek için tıklayınız"
+                (click)="changeMessageStatus(element)">
+                <mat-icon color="warn">swap_horiz</mat-icon>
+              </button> </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="messageColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: messageColumns;"></tr>
+        </table>
+        <div class="actions">
+          <button mat-raised-button color="primary" (click)="addNewMessage()">Yeni Ekle</button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+  </ng-template>
+</div>

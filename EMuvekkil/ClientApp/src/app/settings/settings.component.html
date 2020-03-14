@@ -1,0 +1,22 @@
+<form #userForm='ngForm' class="example-container">
+    <mat-form-field>
+      <input matInput name="identityNumber" [(ngModel)]="userInfo.identityNumber" placeholder="TC Kimlik No" required>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput name="nameSurname" [(ngModel)]="userInfo.nameSurname" placeholder="Adı Soyadı" required>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput name="email" [(ngModel)]="userInfo.email" placeholder="E-Posta" required>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput name="password" [(ngModel)]="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'"  minlength="6">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+  
+    <div class="actions">
+      <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="save()">Kaydet</button>
+    </div>
+  </form>

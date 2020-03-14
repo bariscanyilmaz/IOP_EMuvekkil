@@ -1,0 +1,48 @@
+.example-container{
+    margin: 0 auto;
+}
+.dava{
+    padding-top: 10px;
+    /* width: 80%; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.dava *{
+    margin-top: 10px;
+}
+
+.dava *:not(:first-child):not(:last-child){
+    margin-left: 5px;
+    margin-right: 5px;
+} 
+
+
+table{
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+}
+
+.actions{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dava-actions{
+    width: 240px;
+    margin: 10px auto;
+
+}
+
+.dava-actions *{
+    margin: 0 5px;
+}
+
+tr.mat-footer-row {
+    font-weight: bold;
+  }

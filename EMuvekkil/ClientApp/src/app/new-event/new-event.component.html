@@ -1,0 +1,46 @@
+<form class="example-container" #eventForm="ngForm">
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Tarih" name="date" [(ngModel)]="data.start" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <ngb-timepicker [ngModelOptions]="{standalone: true}" [spinners]="spinners" [(ngModel)]="startTime"
+    [meridian]="false">
+  </ngb-timepicker>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.title" placeholder="Olay" name="title" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="Hatırlatma Tarihi" name="rememberDate"
+      [(ngModel)]="data.rememberDate" required>
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+  <ngb-timepicker [ngModelOptions]="{standalone: true}" [spinners]="spinners" [(ngModel)]="endTime" [meridian]="false">
+  </ngb-timepicker>
+<div class="action add-all">
+  <button mat-raised-button (click)="addEveryOne()" color="accent">Herkesi ekle</button>  
+</div>
+  <mat-form-field class="example-chip-list">
+    <mat-chip-list #chipList aria-label="Kullanıcılar" required>
+      <mat-chip *ngFor="let user of data.users" [selectable]="selectable" [removable]="removable"
+        (removed)="remove(user)">
+        {{user.nameSurname}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Kullanıcı ekle" #fruitInput [formControl]="userCtrl" [matAutocomplete]="auto"
+        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let fruit of filteredUsers | async" [value]="fruit">
+        {{fruit.nameSurname}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="cancel()" color="warn">İptal</button>
+    <button mat-raised-button (click)="save()" color="primary" [disabled]="!eventForm.valid">Kaydet</button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Yeni Döküman Ekle</h1>
+<div mat-dialog-content class="document-dialog-container">
+  <form #masrafForm="ngForm" class="form">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Tarih" name="date"  [(ngModel)]="data.date" required >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="upload-document">
+      <span #fielName>{{fileName}}</span>
+      <button mat-icon-button (click)="file.click()">
+        <mat-icon aria-label="Upload File">file_upload</mat-icon>
+        <input type="file" name="file" [(ngModel)]="data.file" id="file" #file name="file" style="display: inline-block;width: 0;height: 0;" (change)="upload(file.files)" required> 
+      </button>
+    </div>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.description" placeholder="Açıklama" name="description" autocomplete="off" required>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()" color="warn">İptal</button>
+  <button mat-raised-button color="primary" [disabled]="!masrafForm.valid || file.value=='' || !isValidfile" (click)="save()">Kaydet</button>
+</div>

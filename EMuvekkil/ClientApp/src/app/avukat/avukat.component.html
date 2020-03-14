@@ -1,0 +1,26 @@
+<form class="example-container" #userForm="ngForm">
+  <mat-form-field>
+    <input matInput placeholder="TC Kimlik No" [required]="isNewRecord" [(ngModel)]="model.identityNumber" name="
+      identityNumber">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Adı Soyadı" [required]="isNewRecord" [(ngModel)]="model.nameSurname"
+    name="nameSurname" >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="E-Posta" [required]="isNewRecord" [(ngModel)]="model.email" name="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Şifre" [type]="hide ? 'password' : 'text'" [required]="isNewRecord" [(ngModel)]="model.password" name="password" minlength="6">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-raised-button color="warn" *ngIf="!isNewRecord" (click)="delete()">Sil</button>
+    <button mat-raised-button [disabled]="!userForm.valid" color="primary" (click)="save()">Kaydet</button>
+  </div>
+
+</form>

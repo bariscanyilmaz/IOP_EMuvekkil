@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/solid.min.css";
+
+button:focus,
+button:active:focus,
+button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+@media (max-width: 767px) {
+  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+  .body-content {
+    padding-top: 50px;
+  }
+  .app-title,
+  .username {
+    font-size: 16px;
+  }
+
+  .toolbar-icon {
+    width: 45px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+  .app-title,
+  .username {
+    display: none;
+  }
+
+  .logo {
+    width: 300px;
+  }
+
+  td.mat-cell:first-of-type,
+  td.mat-footer-cell:first-of-type,
+  th.mat-header-cell:first-of-type {
+    padding-left: 12px !important;
+  }
+
+  .mat-header-cell,
+  .mat-header {
+    text-align: center !important;
+  }
+
+  .mat-cell {
+    max-width: 70px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+  }
+}

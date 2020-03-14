@@ -1,0 +1,70 @@
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-button {
+  outline: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+.side-nav {
+  width: 200px;
+  box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+}
+
+.container {
+  margin-top: 10px;
+  /* width:80%; */
+  height: calc(100% - 75px);
+}
+
+.footer {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.developer-info {
+  text-align: center;
+  margin: auto 0;
+}
+
+mat-toolbar a {
+  color: white;
+  display: inline-block;
+  margin: 0 10px;
+  line-height: 40px;
+  padding-top: 10px;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-icon {
+  width: 50px;
+  height: auto;
+  margin: 0 10px;
+}
+
+.username {
+  user-select: none;
+}
+
+.notification-menu{
+  width: 270px;
+}
+
+/* .notification-menu .notification-message{
+  word-wrap: break-word;
+  display: block;
+  width: 100%;
+} */

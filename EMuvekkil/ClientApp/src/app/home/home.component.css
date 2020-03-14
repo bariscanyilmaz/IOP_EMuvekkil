@@ -1,0 +1,20 @@
+.logo-container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    height: auto;
+    width: 400px;
+}
+
+@media (max-width: 576px) {
+    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+    .logo{
+      width: 300px;
+    }
+  
+  }

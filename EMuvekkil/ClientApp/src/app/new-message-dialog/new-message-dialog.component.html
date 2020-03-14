@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Yeni Mesaj Ekle</h1>
+<div mat-dialog-content class="message-dialog-container">
+  <form #masrafForm="ngForm"></form>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Tarih" name="date"  [(ngModel)]="data.date" required >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.message" placeholder="Mesaj" name="message" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>  
+  <button mat-raised-button (click)="onNoClick()" color="warn">İptal</button>
+  <button mat-raised-button [mat-dialog-close]="data" color="primary" [disabled]="!masrafForm.valid">Kaydet</button>
+</div>

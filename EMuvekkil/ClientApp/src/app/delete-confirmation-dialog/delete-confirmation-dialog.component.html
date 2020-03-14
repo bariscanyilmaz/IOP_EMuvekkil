@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Uyarı !</h1>
+<div mat-dialog-content>
+  <p>Silmek istediğinizden emin misiniz? </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="confirm(false)" color="warn">Hayır</button>
+  <button mat-raised-button (click)="confirm(true)" color="primary" cdkFocusInitial>Evet</button>
+</div>

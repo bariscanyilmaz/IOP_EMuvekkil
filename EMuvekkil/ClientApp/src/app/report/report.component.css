@@ -1,0 +1,34 @@
+.example-container {
+  margin: 10px auto;
+}
+
+.report {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.actions {
+  min-width: 240px;
+  display: flex;
+  margin: 10px auto;
+  justify-content: space-around;
+}
+
+table {
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.example-margin{
+  margin: 10px 20px;
+}
